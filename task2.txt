@@ -1,0 +1,24 @@
+--- a ---
+
+val positive: Int => String = _ match
+  case x if x >= 0 => "positive"
+  case x if x < 0 => "negative"
+
+def positive(x: Int): String = x match
+  case x if x >= 0 => "positive"
+  case _ => "negative"
+
+println(positive(12)) // positive
+println(positive(0)) // positive
+println(positive(-3)) // negative
+
+--- b ---
+
+val empty: String => Boolean = _ == ""
+val notEmpty = neg(empty)
+
+val neg: (String => Boolean) => (String => Boolean) = p => s => !p(s)
+
+def neg2(p: String => Boolean): String => Boolean = s => !p(s)
+
+println(notEmpty("foo") && !notEmpty("")) // true
