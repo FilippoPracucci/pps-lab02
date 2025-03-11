@@ -19,6 +19,10 @@ class ExprTest:
     val expectedResult = 50
     assertEquals(expectedResult, Expr.evaluate(Expr.Multiply(expr1, expr2)))
 
+  @Test def testEvaluateComplexExpression(): Unit =
+    val expectedResult = 750
+    assertEquals(expectedResult, Expr.evaluate(Expr.Multiply(Expr.Add(expr1, expr2), Expr.Multiply(expr1, expr2))))
+
   @Test def testShowLiteralExpression(): Unit =
     val expectedString = "10"
     assertEquals(expectedString, Expr.show(expr1))
@@ -30,3 +34,7 @@ class ExprTest:
   @Test def testShowMultiplyExpression(): Unit =
     val expectedString = "(10 * 5)"
     assertEquals(expectedString, Expr.show(Expr.Multiply(expr1, expr2)))
+
+  @Test def testShowComplexExpression(): Unit =
+    val expectedString = "((10 + 5) * (10 * 5))"
+    assertEquals(expectedString, Expr.show(Expr.Multiply(Expr.Add(expr1, expr2), Expr.Multiply(expr1, expr2))))
