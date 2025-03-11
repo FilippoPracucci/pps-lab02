@@ -61,11 +61,17 @@ def compose(f: Int => Int, g: Int => Int): Int => Int = x => f(g(x))
 
 println(compose(_ - 1, _ * 2)(5)) // 9
 
-def compose2[X](f: X => X, g: X => X): X => X = x => f(g(x))
+def composeGen[A](f: A => A, g: A => A): A => A = x => f(g(x))
 
 // In order to use the generic version there is the constraint to specify the type of the input.
-println(compose2[Int](_ - 1, _ * 2)(5)) // 9
-println(compose2[String](_ * 2, _ + ", ")("concat")) // concat, concat,
-println(compose2[Boolean](_ == true, _ && true)(false)) // false
+println(composeGen[Int](_ - 1, _ * 2)(5)) // 9
+println(composeGen[String](_ * 2, _ + ", ")("concat")) // concat, concat,
+println(composeGen[Boolean](_ == true, _ && true)(false)) // false
+
+--- 6 ---
+
+def composeThree[A, B, C, D](f: C => D, g: B => C, h: A => B): A => D = x => f(g(h(x)))
+
+println(composeThree[Int, Int, String, String](_+ "!", _.toString, _ * 2)(3)) // "6!"
 
 
