@@ -121,17 +121,43 @@ object Lab2 extends App:
 
   // Task 4, svolto da solo
 
+  /**
+   * Expr is a type that represents arithmetic expressions.
+   * Therefore, an Expr is a sum type with three cases: Literal, Add and Multiply.
+   * Literal represents a numeric constant, Add represents the addition of two sub-expressions and
+   * Multiply represents the multiplication of two sub-expressions.
+   *
+   */
   enum Expr:
     case Literal(value: Int)
     case Add(expr1: Expr, expr2: Expr)
     case Multiply(expr1: Expr, expr2: Expr)
 
   object Expr:
+    /**
+     * evaluate returns the numerical result of the expression passed, if the expression is:
+     * - Literal it returns its value.
+     * - Add it returns the addition of the evaluation of the two sub-expressions.
+     * - Multiply it returns the multiplication of the evaluation of the two sub-expressions.
+     *
+     * @param expr the expression to evaluate.
+     * @return the result of the evaluation of the expression passed.
+     */
     def evaluate(expr: Expr): Int = expr match
       case Literal(value) => value
       case Add(expr1, expr2) => evaluate(expr1) + evaluate(expr2)
       case Multiply(expr1, expr2) => evaluate(expr1) * evaluate(expr2)
+
+    /**
+     * show returns the String that represents the expression passed, if the expression is:
+     * - Literal the string corresponds to its value.
+     * - Add the string is like (expression1 + expression2).
+     * - Multiply the string is like (expression1 * expression2).
+     *
+     * @param expr the expression to represents.
+     * @return the string representation of the expression passed.
+     */
     def show(expr: Expr): String = expr match
       case Literal(value) => value.toString
-      case Add(expr1, expr2) => "(" + show(expr1) + " + " + show(expr2) + ")"
-      case Multiply(expr1, expr2) => "(" + show(expr1) + " * " + show(expr2) + ")"
+      case Add(expr1, expr2) => s"(${show(expr1)} + ${show(expr2)})"
+      case Multiply(expr1, expr2) => s"(${show(expr1)} * ${show(expr2)})"
