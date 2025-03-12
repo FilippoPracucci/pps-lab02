@@ -44,7 +44,6 @@ object Lab2 extends App:
   println(formattedTestString("negative", positive2(-3)))
 
   val empty: String => Boolean = _ == ""
-
   val neg: (String => Boolean) => (String => Boolean) = p => s => !p(s)
 
   def neg2(p: String => Boolean): String => Boolean = s => !p(s)
@@ -58,7 +57,6 @@ object Lab2 extends App:
   def negGeneric[X](p: X => Boolean): X => Boolean = x => !p(x)
 
   val isZero: Int => Boolean = _ == 0
-
   println("\n- Neg generic function -")
   println(formattedTestString(!isZero(0), negGeneric(isZero)(0)))
 
@@ -78,14 +76,13 @@ object Lab2 extends App:
 
   def compose(f: Int => Int, g: Int => Int): Int => Int = x => f(g(x))
 
-  def composeGeneric[A](f: A => A, g: A => A): A => A = x => f(g(x))
+  def composeGeneric[A, B, C](f: B => C, g: A => B): A => C = x => f(g(x))
 
-  // In order to use the generic version there is the constraint to specify the type of the input.
   println("\n- Functional composition -")
   println(formattedTestString("9", compose(_ - 1, _ * 2)(5)))
-  println(formattedTestString("false", composeGeneric[Boolean](_ == true, _ && true)(false)))
+  println(formattedTestString("10!", composeGeneric((x: Int) => s"${x}!", (y: Int) => y * 2)(5)))
 
-  def composeThree[A, B, C, D](f: C => D, g: B => C, h: A => B): A => D = x => f(g(h(x)))
+  def composeThree[A, B, C, D](f: C => D, g: B => C, h: A => B): A => D = x => f(composeGeneric(g, h)(x))
 
   println("\n- Functional composition with three functions -")
   println(formattedTestString("6!", composeThree[Int, Int, String, String](_ + "!", _.toString, _ * 2)(3)))
