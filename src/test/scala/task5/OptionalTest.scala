@@ -30,4 +30,4 @@ class OptionalTest:
   @Test def mapShouldReturnTransformedValueWhenNonEmpty(): Unit =
     val nonEmpty = Optional.Maybe(0)
     val result = Optional.map(nonEmpty, _ + 1)
-    assertEquals(1, Optional.orElse(result, 1))
+    assertEquals(1, Optional.orElse(result, 5))
