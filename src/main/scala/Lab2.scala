@@ -108,7 +108,7 @@ object Lab2 extends App:
   def reverseNumber(n: Int): Int =
     @annotation.tailrec
     def _reverse(n: Int, reversed: Int): Int = n match
-      case n if (n / 10 == 0) && (n % 10 == 0) => reversed
+      case 0 => reversed
       case _ => _reverse(n / 10, reversed * 10 + (n % 10))
 
     _reverse(n, 0)
